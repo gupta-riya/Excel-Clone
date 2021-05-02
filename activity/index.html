@@ -12,9 +12,88 @@
 
   <body>
 
-    <div class="menu-container"></div>
-    <div class="formula-container"></div>
-    <div class="grid"></div>
+<!-- -----------menu container-------------------- -->
+    <div class="menu-container">
+
+      <!-- -------- this formatting container has two subgroups container -->
+      <div class="formatting-container">
+      
+
+        <!-- ------------ first subgroup of formatting conatiner -->
+        <!-- -------- this group has font style , B/U/I conatiner -->
+        <div class="subgroup">
+          
+            <select id="font-family" class="font-family-container">
+              <option value="Arial">Arial</option>
+              <option value="Cambria">Cambria</option>
+              <option value="Georgia">Georgia</option>
+              <option value="monospace">monospace</option>
+              <option value="sans-serif">sans-serif</option>
+              <option value="fantasy">fantasy</option>
+            </select>
+          
+          <div class="BUI-container">
+            <input type="button" value="B" class="buiBtn">
+            <input type="button" value="U" class="buiBtn">
+            <input type="button" value="I" class="buiBtn">
+
+          </div>
+        
+        </div>
+
+        <!-- ----------second subgroup of formatting container -->
+        <!-- ---------- this subgroup has font size and color, bg color--- -->
+        <div class="subgroup">
+          
+            <select  id="font-size" class ="font-size-container">
+              <option value="8">8</option>
+              <option value="10">10</option>
+              <option value="12">12</option>
+              <option value="16">16</option>
+              <option value="20">20</option>
+              <option value="32">32</option>
+            </select>
+          
+          <div class="color-container">
+            <input type="color" id="color" class="text-color">
+            <input type="color" id="bg-color" class="bg-color">
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- -------------- alignment continer --------------  -->
+      <div class="alignment-container">
+        <input type="button" value="L" class = "alignBtn">
+        <input type="button" value="C" class = "alignBtn">
+        <input type="button" value="R" class = "alignBtn">
+      </div>
+
+    </div>
+
+<!-- ------------------ formula container----------------- -->
+    <div class="formula-container">
+      <input type="text" class="address-box" readonly>
+      <div class="separator">:</div>
+      <input type="text" class="formula-box">
+    </div>
+
+    
+<!-- ------------------- grid container ------------------- -->
+    <div class="grid_container">
+        <div class="top-left-block"></div>
+        <div class="top-row">
+           
+        </div>
+        <div class="left-col">
+            
+        </div>
+        <div class="grid"></div>
+    </div>
+
+
+<!-- ------------------- sheet container -------------------- -->
     <div class="sheets">
 
         <div class="add_sheet_container">
@@ -27,6 +106,10 @@
         </div>
 
     </div>
-    <script src = "script.js"></script>
+
+
+<!-- ------------------- javascript files ------------------- -->
+    <script src = "init.js" defer></script>
+    <script src = "script.js" defer></script>
   </body>
 </html>
