@@ -64,7 +64,7 @@ for(let i = 0 ; i < AllCells.length ; i++)
 }
 
 //change the font family of selected cell
-fontfamilyBtn.addEventListener("click",function(){
+fontfamilyBtn.addEventListener("change",function(){
     let fontFamily = fontfamilyBtn.value;
     let address = addressBar.value;
     let {rid , cid} = getRidCidFromAddress(address);
@@ -95,7 +95,7 @@ for(let i = 0 ; i < BUIBtn.length ; i++)
 
 
 // change font size of selected cell
-fontsizeBtn.addEventListener("click",function(){
+fontsizeBtn.addEventListener("change",function(){
     let fontSize = fontsizeBtn.value;
     let address = addressBar.value;
     let {rid , cid} = getRidCidFromAddress(address);
