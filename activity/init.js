@@ -27,3 +27,30 @@ for (let i = 0; i < 100; i++) {
     str3 += `</div>`;
 }
 grid.innerHTML = str3;
+
+
+// 2-d array -> styling property array
+// cel set
+let sheetDB = [];
+
+for(let i = 0 ; i < 100 ; i++)
+{
+    let row = [];
+    for(let j = 0 ; j < 26 ; j++){
+    
+        let cell = {
+            bold:"normal",
+            underline:"none",
+            italic:"normal",
+            fontFamily: "Arial",
+            fontSize:"16",
+            fontColor:"#000000",
+            bgColor:"#ffffff",
+            halign:"left"
+
+        }
+        row.push(cell);
+    }
+    sheetDB.push(row);
+}
+

@@ -57,6 +57,15 @@ body{
     width: 30%;
 }
 
+
+.active-btn{
+
+    background-color: dimgrey;
+    border: 1px 1px 1px 1px solid black;
+}
+
+
+
 .color-container{
     width:100%;
     display:flex;
