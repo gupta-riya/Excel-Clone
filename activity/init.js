@@ -29,28 +29,41 @@ for (let i = 0; i < 100; i++) {
 grid.innerHTML = str3;
 
 
-// 2-d array -> styling property array
-// cel set
-let sheetDB = [];
 
-for(let i = 0 ; i < 100 ; i++)
+// new sheet
+
+workSheetDB = [];
+function initCurrentSheetDb()
 {
-    let row = [];
-    for(let j = 0 ; j < 26 ; j++){
     
-        let cell = {
-            bold:"normal",
-            underline:"none",
-            italic:"normal",
-            fontFamily: "Arial",
-            fontSize:"16",
-            fontColor:"#000000",
-            bgColor:"#ffffff",
-            halign:"left"
+    // 2-d array -> styling property array
+    // cel set
+    let sheetDB = [];
 
+    for(let i = 0 ; i < 100 ; i++)
+    {
+        let row = [];
+        for(let j = 0 ; j < 26 ; j++){
+        
+            let cell = {
+                bold:false,
+                underline:false,
+                italic:false,
+                fontFamily: "Arial",
+                fontSize:"16",
+                fontColor:"#000000",
+                bgColor:"#ffffff",
+                halign:"left",
+                value:""
+
+            }
+            row.push(cell);
         }
-        row.push(cell);
+        sheetDB.push(row);
     }
-    sheetDB.push(row);
+    workSheetDB.push(sheetDB);
+
 }
 
+//call initially
+initCurrentSheetDb();

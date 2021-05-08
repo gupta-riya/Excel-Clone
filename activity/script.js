@@ -12,7 +12,12 @@ let bgColorBtn = document.querySelector(".bg-color");
 let alignBtn = document.querySelectorAll(".alignBtn");
 
 
+
 // ***************************sheets**************************
+
+// call to first sheet
+let sheetDB = workSheetDB[0];
+
 
 // first default sheet will always be there so explicitly add an event listener to the first sheet
 sheetActiveEventHandler(firstSheet);
@@ -27,8 +32,22 @@ addbtnContainer.addEventListener("click", function () {
     let newSheet = document.createElement("div");
     newSheet.setAttribute("class", "sheet");
     newSheet.setAttribute("sheetIdx", idx + 1);
-    newSheet.innerText = `Sheet ${idx + 2}`;
+    newSheet.innerText = `Sheet ${idx + 1}`;
     sheetList.appendChild(newSheet);
+
+
+    //active sheet
+    sheetsArr.forEach(function (sheet) {
+        sheet.classList.remove("active_sheet");
+    })
+
+    sheetsArr = document.querySelectorAll(".sheet");
+    sheetsArr[sheetsArr.length - 1].classList.add("active_sheet");
+    initCurrentSheetDb();
+    sheetDB = workSheetDB[idx];
+
+    //empty cells
+    initUI();
 
     // add event listener corresponding to the new sheet created
     sheetActiveEventHandler(newSheet);
@@ -37,19 +56,46 @@ addbtnContainer.addEventListener("click", function () {
 })
 
 // this function removes and add active class event to the calling sheet
-function sheetActiveEventHandler(sheet) {
-    sheet.addEventListener("click", function () {
+function sheetActiveEventHandler(curSheet) {
+    curSheet.addEventListener("click", function (e) {
+        let MySheet = e.currentTarget;
         let sheetsArr = document.querySelectorAll(".sheet");
         sheetsArr.forEach(function (sheet) {
             sheet.classList.remove("active_sheet");
         })
-        if (!sheet.classList[1]) {
-            sheet.classList.add("active_sheet");
+        if (!MySheet.classList.contains("active_sheet")) {
+            MySheet.classList.add("active_sheet");
         }
+
+        let sheetIdx = MySheet.getAttribute("sheetIdx");
+
+
+        sheetDB = workSheetDB[sheetIdx - 1];
+
+
+
+        setUI(sheetDB);
     })
 }
 
+// empty all the cells for the new sheet
+function initUI() {
+    for (let i = 0; i < AllCells.length; i++) {
+        AllCells[i].style.fontFamily = "arial";
+        AllCells[i].style.fontSize = "16px";
+        AllCells[i].style.fontWeight = "normal";
+        AllCells[i].style.textDecoration = "none";
+        AllCells[i].style.fontStyle = "normal";
+        AllCells[i].style.color = "#000000";
+        AllCells[i].style.backgroundColor = "#ffffff";
+        AllCells[i].style.textAlign = "left";
+        AllCells[i].innerText = "";
 
+
+
+    }
+
+}
 
 
 // *************************address bar **********************************
@@ -65,11 +111,9 @@ for (let i = 0; i < AllCells.length; i++) {
         addressBar.value = address;
         let cellObj = sheetDB[rid][cid];
 
+        //**********************retrieve font family*************** */
 
-
-         //**********************retrieve font family*************** */
-
-       // fontfamilyBtn.value =  cellObj[rid][cid].fontFamily;
+        // fontfamilyBtn.value =  cellObj[rid][cid].fontFamily;
 
         //**********************retrieve BUI *************** */
         for (let i = 0; i < BUIBtn.length; i++) {
@@ -140,7 +184,7 @@ fontfamilyBtn.addEventListener("change", function () {
     let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
     cell.style.fontFamily = fontFamily;
     let cellObj = sheetDB[rid][cid];
-    cellObj.fontSize = fontFamily;
+    cellObj.fontFamily = fontFamily;
 })
 
 // BUI formatting
@@ -270,4 +314,36 @@ for (let i = 0; i < alignBtn.length; i++) {
 }
 
 
+// when we stop typing or move away from a specific cell then its data get stored in object
+for (let i = 0; i < AllCells.length; i++) {
+    AllCells[i].addEventListener("blur", function () {
+        let address = addressBar.value;
+        let { rid, cid } = getRidCidFromAddress(address);
+        let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+        let cellObj = sheetDB[rid][cid];
+        cellObj.value = cell.innerText;
 
+
+
+    })
+}
+
+function setUI(sheetDB) {
+    for (let i = 0; i < sheetDB.length; i++) {
+        for (let j = 0; j < sheetDB[i].length; j++) {
+            let cell = document.querySelector(`.col[rid="${i}"][cid="${j}"]`);
+
+            let { bold, underline, italic, fontFamily, fontSize, fontColor, bgColor, halign, value } = sheetDB[i][j];
+
+            cell.style.fontFamily = fontFamily;
+            cell.style.fontSize = fontSize;
+            cell.style.fontWeight = bold == true ? "bold" : "normal";
+            cell.style.textDecoration = underline == true ? "underline" : "none";
+            cell.style.fontStyle = italic == true ? "italic" : "normal";
+            cell.style.color = fontColor;
+            cell.style.backgroundColor = bgColor;
+            cell.style.textAlign = halign;
+            cell.innerText = value;
+        }
+    }
+}
