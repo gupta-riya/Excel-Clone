@@ -10,7 +10,7 @@ let fontsizeBtn = document.querySelector(".font-size-container");
 let textColorBtn = document.querySelector(".text-color");
 let bgColorBtn = document.querySelector(".bg-color");
 let alignBtn = document.querySelectorAll(".alignBtn");
-
+let formulaInput = document.querySelector(".formula-box");
 
 
 // ***************************sheets**************************
@@ -328,6 +328,7 @@ for (let i = 0; i < AllCells.length; i++) {
     })
 }
 
+//every time we switch sheets it will reload its data
 function setUI(sheetDB) {
     for (let i = 0; i < sheetDB.length; i++) {
         for (let j = 0; j < sheetDB[i].length; j++) {
@@ -346,4 +347,69 @@ function setUI(sheetDB) {
             cell.innerText = value;
         }
     }
+}
+
+
+
+//**************************** handle formula bar *************** */
+
+// Steps:
+// 1.Identify formula
+// 2.Evaluate formula -> value
+// 3.UI print
+// 4.DB-> current cell -> value    
+//                     -> formula
+// 5. Parent -> children arr -> add 
+
+formulaInput.addEventListener("keydown",function(e){
+
+    if(e.key=="Enter" && formulaInput.value != ""){
+        let formula = formulaInput.value;
+        //get current cell
+        let evaluateValue = evaluateFormula(formula);
+        //UI change
+        let address = addressBar.value;
+        let {rid,cid} = getRidCidFromAddress(address);
+        setUIByFormula(evaluateValue , rid , cid);
+        //db->works
+        //setContentInDB(value,formula);
+    }
+
+})
+
+// evalue function
+function evaluateFormula(formula)
+{
+    // "( A1 + A2 )"
+    let formulaTokens = formula.split(" ");
+    //split
+    // [(, A1, +, A2,)]
+    for(let i = 0 ; i < formulaTokens.length ; i++)
+    {
+        
+        let firstCharOfToken = formulaTokens[i].charCodeAt(0);
+        if(firstCharOfToken >= 65 && firstCharOfToken <= 90)
+        {
+            // console.log(formulaTokens[i]);
+            let {rid,cid} = getRidCidFromAddress(formulaTokens[i]);
+            let cellObject= sheetDB[rid][cid];
+            let {value} = cellObject;
+            formula = formula.replace(formulaTokens[i],value);
+           
+        }
+    }
+
+    // infix evaluation
+    let ans = eval(formula);
+    return ans;
+    // DB -> A1,A2 -> 10,20
+    // [(,10 +,20 )]
+    // ( 10 + 20 )
+}
+
+
+function setUIByFormula(value, rid, cid)
+{
+   document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`).innerText = value;
+   // parent add yourself as a 
 }
