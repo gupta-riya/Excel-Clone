@@ -88,7 +88,18 @@ body{
     width: 20%;
 }
 
+.file-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.file-container>*{
+    width: 20%;
+}
 
+.file-icon{
+    font-size: 30px;
+}
 
 
 /* ********************** formula container ************************ */
