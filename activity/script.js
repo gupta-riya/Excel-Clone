@@ -11,6 +11,8 @@ let textColorBtn = document.querySelector(".text-color");
 let bgColorBtn = document.querySelector(".bg-color");
 let alignBtn = document.querySelectorAll(".alignBtn");
 let formulaInput = document.querySelector(".formula-box");
+let gridContainer = document.querySelector(".grid_container");
+let topLeftBlock = document.querySelector(".top-left-block");
 
 
 // ***************************sheets**************************
@@ -316,6 +318,7 @@ for (let i = 0; i < alignBtn.length; i++) {
 
 // when we stop typing or move away from a specific cell then its data get stored in object
 for (let i = 0; i < AllCells.length; i++) {
+    // update formula evaluation on blur
     AllCells[i].addEventListener("blur", function () {
         let address = addressBar.value;
         let { rid, cid } = getRidCidFromAddress(address);
@@ -333,7 +336,47 @@ for (let i = 0; i < AllCells.length; i++) {
 
 
     })
+
+    // if height of cell increase , increase the height of row also
+
+    AllCells[i].addEventListener("keydown",function(){
+
+        //getBoundingClientRect gives variours attribute related to a specific element eg - length, height, etc
+
+        let obj = AllCells[i].getBoundingClientRect();
+        let heightObj = obj.height;     //this gives number
+        let address = addressBar.value;
+        let {rid,cid} = getRidCidFromAddress(address);
+        let leftCol = document.querySelectorAll(".left-col .left-col-box")[rid];
+        let heightLeftCol = leftCol.style.height;   // this gives number along with unit
+       
+        heightLeftCol = heightLeftCol.split("px")[0];
+        let height = Math.max(heightLeftCol,heightObj);
+        leftCol.style.height = height+"px";
+
+    })
+
+
+
+
 }
+
+
+gridContainer.addEventListener("scroll",function(e){
+    
+
+    // let topRow = document.querySelector(".top-row");
+    // let leftCol = document.querySelector(".left-col");
+    // both topRow and leftCol is defined in init.js
+    let top = gridContainer.scrollTop;
+    let left = gridContainer.scrollLeft;
+    topLeftBlock.style.top = top + "px";
+     topRow.style.top = top + "px";
+    leftCol.style.left = left + "px";
+    topLeftBlock.style.left = left + "px";
+})
+
+
 
 //every time we switch sheets it will reload its data
 function setUI(sheetDB) {
