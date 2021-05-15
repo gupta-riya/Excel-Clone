@@ -54,7 +54,9 @@ function initCurrentSheetDb()
                 fontColor:"#000000",
                 bgColor:"#ffffff",
                 halign:"left",
-                value:""
+                value:"",
+                children:[],
+                formula:"",
 
             }
             row.push(cell);

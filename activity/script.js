@@ -321,8 +321,15 @@ for (let i = 0; i < AllCells.length; i++) {
         let { rid, cid } = getRidCidFromAddress(address);
         let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
         let cellObj = sheetDB[rid][cid];
+        if(cellObj.value==cell.innerText)
+        {
+            return;
+        }
+        if(cellObj.formula){
+            removeFormula(cellObj,address);
+        }
         cellObj.value = cell.innerText;
-
+        changeChildren(cellObj);
 
 
     })
@@ -364,15 +371,39 @@ function setUI(sheetDB) {
 formulaInput.addEventListener("keydown",function(e){
 
     if(e.key=="Enter" && formulaInput.value != ""){
-        let formula = formulaInput.value;
-        //get current cell
-        let evaluateValue = evaluateFormula(formula);
-        //UI change
+        let newFormula = formulaInput.value;
+        //resultant cell address
         let address = addressBar.value;
         let {rid,cid} = getRidCidFromAddress(address);
-        setUIByFormula(evaluateValue , rid , cid);
+        let cellObject = sheetDB[rid][cid];
+
+        // if there is any previous formula associated with cel object
+        let previousFormula = cellObject.formula;
+        if(previousFormula==newFormula)
+        {
+            return;
+        }
+        if(previousFormula!="" && previousFormula!=newFormula)
+        {
+            // if formulas are not equal then remove the existing one first
+            removeFormula(cellObject,address);
+        }
+
+        // check if any cycle of formula is formed. eg: A1 -> ( 2 * B1), B1 -> ( 2 * C1), C1 -> ( 2 * A1)
+        let hasCycle = checkCycleFormation(newFormula,address);
+
+        if(hasCycle)
+        {
+            alert("Forming cycle, cannot apply formula");
+            return;
+        }
+       
+        let evaluatedValue = evaluateFormula(newFormula);
+        //UI change
+        setUIByFormula(evaluatedValue , rid , cid);
         //db->works
-        //setContentInDB(value,formula);
+        setFormula(evaluatedValue,newFormula,rid,cid,address);
+        changeChildren(cellObject); // change the children associated with the resultant cell
     }
 
 })
@@ -408,8 +439,130 @@ function evaluateFormula(formula)
 }
 
 
+function checkCycleFormation(Formula,address)
+{
+    if(Formula=="")
+    return false;
+    
+    let formulaTokens = Formula.split(" ");
+   
+    for(let i = 0 ; i < formulaTokens.length ; i++)
+    {
+        
+        let firstCharOfToken = formulaTokens[i].charCodeAt(0);
+        if(firstCharOfToken >= 65 && firstCharOfToken <= 90)
+        {
+
+            if(formulaTokens[i]==address)
+            return true;
+
+            let parentRCid = getRidCidFromAddress(formulaTokens[i]);
+            let parentObject= sheetDB[parentRCid.rid][parentRCid.cid];
+            let hasCycle = checkCycleFormation(parentObject.formula,address);
+            if(hasCycle)
+            return true;
+
+            
+        }
+    }
+
+    return false;
+
+}
+
+
 function setUIByFormula(value, rid, cid)
 {
+    // display result in the resultant cell
    document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`).innerText = value;
-   // parent add yourself as a 
+   
+}
+
+
+function setContentInDB(value,formula,rid,cid,address)
+{
+    let cellObj = sheetDB[rid][cid];
+    cellObj.value = value;
+    cellObj.formula = formula;
+
+    let formulaTokens = formula.split(" ");
+   
+    for(let i = 0 ; i < formulaTokens.length ; i++)
+    {
+        
+        let firstCharOfToken = formulaTokens[i].charCodeAt(0);
+        if(firstCharOfToken >= 65 && firstCharOfToken <= 90)
+        {
+            // console.log(formulaTokens[i]);
+            let parentRCid = getRidCidFromAddress(formulaTokens[i]);
+            let cellObject= sheetDB[parentRCid.rid][parentRCid.cid];
+            
+            cellObject.children.push(address);
+           
+        }
+    }
+
+
+}
+
+
+function setFormula(value,formula,rid,cid,address)
+{
+    let cellObject = sheetDB[rid][cid];
+    cellObject.value = value;
+    cellObject.formula = formula;
+    let formulaTokens = formula.split(" ");
+    for(let i = 0 ; i < formulaTokens.length; i++)
+    {
+        let firstCharOfToken = formulaTokens[i].charCodeAt(0);
+        if(firstCharOfToken >= 65 && firstCharOfToken <= 90)
+        {
+            let parentRCid = getRidCidFromAddress(formulaTokens[i]);
+            let cellObject = sheetDB[parentRCid.rid][parentRCid.cid];
+            // like for ( A1 + A2 ) -> B1 => push B1 in A1 object and also in A2 object
+            cellObject.children.push(address);
+        }
+    }
+}
+
+
+function changeChildren(cellObject)
+{
+
+    let children = cellObject.children;
+    for(let i = 0 ; i < children.length ; i++)
+    {
+        let chAddress = children[i];
+        let chRICIObj = getRidCidFromAddress(chAddress);
+        let chObj = sheetDB[chRICIObj.rid][chRICIObj.cid];
+        let formula = chObj.formula;
+        let evaluatedValue = evaluateFormula(formula);
+        setUIByFormula(evaluatedValue,chRICIObj.rid,chRICIObj.cid);
+        chObj.value = evaluatedValue;
+        changeChildren(chObj);
+    }
+
+}
+
+function removeFormula(cellObject,address)
+{
+    let formula = cellObject.formula;
+    let formulaTokens = formula.split(" ");
+    for(let i = 0 ; i < formulaTokens.length ; i++)
+    {
+        let firstCharOfToken = formulaTokens[i].charCodeAt(0);
+        if(firstCharOfToken >= 65 && firstCharOfToken <= 90)
+        {
+            // console.log(formulaTokens[i]);
+            let parentRCid = getRidCidFromAddress(formulaTokens[i]);
+            let parentCellObject= sheetDB[parentRCid.rid][parentRCid.cid];
+            
+            let children = parentCellObject.children;
+            let idx = children.indexOf(address);
+            children.splice(idx,1);
+           
+        }
+    }
+
+    cellObject.formula="";
 }
