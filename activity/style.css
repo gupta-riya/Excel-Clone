@@ -187,10 +187,11 @@ input[type="color" i] {
 /* ********************** formula container ************************ */
 .formula-container{
     height: 30px;
-    background-color: rgb(107, 146, 146);
+    background-color: #e6e1e1;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+   
 }
 
 .address-box{
@@ -201,8 +202,10 @@ input[type="color" i] {
     width: 2%;
 }
 
+
 .formula-box{
     width: 80%;
+   
 }
 
 
@@ -222,7 +225,7 @@ input[type="color" i] {
 .top-left-block{
     height: 30px;
     width: 25px;
-    background-color: gray;
+    background-color: rgb(216, 213, 213);
     position: absolute;
     top: 0px;
     left: 0px;
@@ -231,31 +234,33 @@ input[type="color" i] {
 .top-row{
     
     height:30px;
-    background-color: lightskyblue;
+    background-color: #cecaca;
     display:flex;
-    position: absolute;
+    position:absolute;
     top:0px;
     left:26px;
     z-index: 90;
-
+    text-align: center;
+    
 }
 
 
 .row{
     display:flex;
     
+    
 }
 .col{
     min-width: 80px;
     max-width: 80px;
-    border: 1px solid;
+    border: 1px solid gray;
     min-height: 30px;
     
 }
 
 .left-col{
     width: 25px;
-    border: 1px solid red;
+    
     position: absolute;
     top: 30px;
     left:0px;
@@ -269,10 +274,10 @@ input[type="color" i] {
 }
 
 .left-col-box{
-    height: 29px;
-    background-color: lightskyblue;
+    height: 30px;
+    background-color: #cecaca;
     text-align: center;
-    border: 1px solid;
+    border: 1px solid gray;
 }
 
 
@@ -290,7 +295,7 @@ input[type="color" i] {
     width:30px;
     height: 100%;
     text-align: center;
-    border: 1px solid gray;
+    border: 2px solid gray;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -299,7 +304,7 @@ input[type="color" i] {
 
 .icon{
     font-size: 1.2rem ;
-    color:turquoise;
+    color:rgb(5, 128, 66);
 }
 
 .sheets_list{
@@ -323,6 +328,8 @@ input[type="color" i] {
     display: flex;
     align-items: center;
     justify-content:space-evenly;
+    color:rgb(5, 128, 66);
+    font-weight: 600;
 }
 
 .active_sheet{
