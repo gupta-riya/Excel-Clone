@@ -333,6 +333,8 @@ for (let i = 0; i < AllCells.length; i++) {
         }
         cellObj.value = cell.innerText;
         changeChildren(cellObj);
+        adjustHeightOfColumn(AllCells[i]);      
+
 
 
     })
@@ -341,24 +343,24 @@ for (let i = 0; i < AllCells.length; i++) {
 
     AllCells[i].addEventListener("keydown",function(){
 
-        //getBoundingClientRect gives variours attribute related to a specific element eg - length, height, etc
-
-        let obj = AllCells[i].getBoundingClientRect();
-        let heightObj = obj.height;     //this gives number
-        let address = addressBar.value;
-        let {rid,cid} = getRidCidFromAddress(address);
-        let leftCol = document.querySelectorAll(".left-col .left-col-box")[rid];
-        let heightLeftCol = leftCol.style.height;   // this gives number along with unit
-       
-        heightLeftCol = heightLeftCol.split("px")[0];
-        let height = Math.max(heightLeftCol,heightObj);
-        leftCol.style.height = height+"px";
+        adjustHeightOfColumn(AllCells[i]);      
 
     })
 
 
 
 
+}
+
+function adjustHeightOfColumn(cellObj)
+{
+    //getBoundingClientRect gives variours attribute related to a specific element eg - length, height, etc
+    let obj = cellObj.getBoundingClientRect();
+    let heightObj = obj.height;     //this gives number
+    let address = addressBar.value;
+    let {rid,cid} = getRidCidFromAddress(address);
+    let leftCol = document.querySelectorAll(".left-col .left-col-box")[rid];
+    leftCol.style.height = heightObj+"px";
 }
 
 
@@ -395,8 +397,15 @@ function setUI(sheetDB) {
             cell.style.backgroundColor = bgColor;
             cell.style.textAlign = halign;
             cell.innerText = value;
+            let obj = cell.getBoundingClientRect();
+            let heightObj = obj.height;
+            let leftCol = document.querySelectorAll(".left-col .left-col-box")[i];
+            leftCol.style.height = heightObj+"px";
         }
+       
     }
+
+    
 }
 
 

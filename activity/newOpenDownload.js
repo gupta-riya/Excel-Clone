@@ -1,4 +1,29 @@
   
+// ------------ new file ----------------------
+let newFile = document.querySelector(".new");
+newFile.addEventListener("click",function(){
+
+    let confirmReq = confirm("Do you want to create a new workspace ?");
+    if(confirmReq == true)
+    {
+        workSheetDB = [];
+        
+    }
+
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
 let download = document.querySelector(".download");
 download.addEventListener("click", function () {
     const data = JSON.stringify(workSheetDB);

@@ -62,6 +62,8 @@ function initCurrentSheetDb()
             row.push(cell);
         }
         sheetDB.push(row);
+        let leftCol = document.querySelectorAll(".left-col .left-col-box")[i];
+        leftCol.style.height = 30+"px";
     }
     workSheetDB.push(sheetDB);
 
