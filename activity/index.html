@@ -12,8 +12,27 @@
 
   <body>
 
+<!-- ------------header ----------------- -->
+<div class="excel-header"><span>EXCEL</span></div>
+
+
+
+
 <!-- -----------menu container-------------------- -->
     <div class="menu-container">
+
+      
+      <!-- --------------- file container - > new , open , download ----- -->
+      <div class="file-container">
+        <i class="fas fa-file-alt new file-icon"></i>
+        <div class="open-file-container">
+          <input type="file" id="files"  hidden />
+          <label for = "files">
+          <i class="fas fa-folder-open open file-icon"></i>
+          </label>
+        </div>        
+        <i class="fas fa-file-download download file-icon"></i>
+      </div>
 
       <!-- -------- this formatting container has two subgroups container -->
       <div class="formatting-container">
@@ -80,17 +99,6 @@
         <img src="icons/right-align.png" class = "alignBtn" alt="">
       </div>
 
-      <!-- --------------- file container - > new , open , download ----- -->
-      <div class="file-container">
-        <i class="fas fa-file-alt new file-icon"></i>
-        <div class="open-file-container">
-          <input type="file" id="files"  hidden />
-          <label for = "files">
-          <i class="fas fa-folder-open open file-icon"></i>
-          </label>
-        </div>        
-        <i class="fas fa-file-download download file-icon"></i>
-      </div>
 
     </div>
 
