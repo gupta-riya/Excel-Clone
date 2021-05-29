@@ -125,10 +125,10 @@ for (let i = 0; i < AllCells.length; i++) {
             BUIBtn[0].classList.add("active-btn");
         }
         if (cellObj.underline == true) {
-            BUIBtn[1].classList.add("active-btn");
+            BUIBtn[2].classList.add("active-btn");
         }
         else if (cellObj.italic == true) {
-            BUIBtn[2].classList.add("active-btn");
+            BUIBtn[1].classList.add("active-btn");
         }
 
         //**********************retrieve font size *************** */
@@ -205,11 +205,11 @@ for (let i = 0; i < BUIBtn.length; i++) {
                 cellObj.bold = true;
             }
 
-            if (i == 1) {
+            if (i == 2) {
                 cell.style.textDecoration = "underline";
                 cellObj.underline = true;
             }
-            if (i == 2) {
+            if (i == 1) {
                 cell.style.fontStyle = "italic";
                 cellObj.italic = true;
             }
