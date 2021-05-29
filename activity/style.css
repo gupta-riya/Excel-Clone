@@ -76,7 +76,7 @@ body{
 
 .active-btn{
 
-    background-color: rgb(168, 167, 167);
+    background-color: rgb(220, 224, 253);
     border: 1px 1px 1px 1px solid black;
     color:rgb(100, 96, 96);
 }
@@ -107,6 +107,10 @@ body{
     border: none;
     outline: none;
     
+}
+
+.color-container>*:hover{
+    background-color: #eeeeee;
 }
 
 .text-color-container, .bg-color-container{
@@ -152,6 +156,18 @@ input[type="color" i] {
 
 .alignment-container>*{
     width: 20%;
+}
+
+.alignment-container>*:hover{
+    background-color: #eeeeee;
+}
+
+.alignBtn{
+
+    width: 15%;
+    height:50%;
+    margin: 6% ;
+    padding: 5px 5px;
 }
 
 .file-container{
