@@ -34010,9 +34010,9 @@
         "fontFamily": "Arial",
         "fontSize": "16",
         "fontColor": "#000000",
-        "bgColor": "#ffffff",
+        "bgColor": "#eeeeee",
         "halign": "left",
-        "value": "",
+        "value": "tab2 of sheet 2",
         "children": [],
         "formula": ""
       },

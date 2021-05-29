@@ -11,20 +11,7 @@ newFile.addEventListener("click",function(){
 })
 
 
-
-// let openFile = document.querySelector(".open");
-// openFile.addEventListener("click",function(){
-//     document.getElementById('files').addEventListener('change', function(evt){
-//         var reader = new FileReader();
-//         reader.readAsText(evt.target.file);
-//         reader.onload = function(theFile)
-//         {
-//             json = JSON.parse(e.target.result);
-// 			alert('json global var has been set to parsed json of this file here it is unevaled = \n' + JSON.stringify(json));
-//         }
-//         json = JSON.parse(e.target.result);
-//     });
-// })
+// -------------- open file --------------------
 
 let openFile = document.querySelector(".open");
 openFile.addEventListener("click",uploadJsonFile);
@@ -50,8 +37,10 @@ function uploadJsonFile()
         // place active on sheet list 1
         clearAllExistingDataAndTabs();
 
+        renderDataOfOpenedFile(obj);
 
-        
+
+
     }
     
     document.getElementById('files').addEventListener('change', onChange);
@@ -64,14 +53,96 @@ function clearAllExistingDataAndTabs()
     workSheetDB = [];
     initCurrentSheetDb();
     sheetDB = workSheetDB[0];
-    firstSheet.click();
     for(let i = 1 ; i < sheetsArr.length ; i++)
     {
         sheetsArr[i].remove();
     }
+    firstSheet.click();
 }
 
+function renderDataOfOpenedFile(obj){
 
+    // sheet nums
+    let numOfSheets = obj.length;
+
+    sheetDB = [];
+
+    for(let i = 0 ; i < 100 ; i++)
+    {
+        let row = [];
+        for(let j = 0 ; j < 26 ; j++){
+        
+            let cell = {
+                bold:obj[0][i][j].bold,
+                underline:obj[0][i][j].underline,
+                italic:obj[0][i][j].italic,
+                fontFamily: obj[0][i][j].fontFamily,
+                fontSize:obj[0][i][j].fontSize,
+                fontColor:obj[0][i][j].fontColor,
+                bgColor:obj[0][i][j].bgColor,
+                halign:obj[0][i][j].halign,
+                value:obj[0][i][j].value,
+                children:obj[0][i][j].children,
+                formula:obj[0][i][j].formula,
+
+            }
+            row.push(cell);
+        }
+        sheetDB.push(row);
+        let leftCol = document.querySelectorAll(".left-col .left-col-box")[i];
+        leftCol.style.height = 30+"px";
+    }
+
+    // render it on screen and save it in worksheetDB
+
+    workSheetDB = [];
+    workSheetDB.push(sheetDB);
+    setUI(sheetDB);
+
+    console.log("completed");
+
+    for(let k = 1 ; k < numOfSheets ; k++)
+    {
+        addbtnContainer.click();
+        sheetDB = [];
+
+        for(let i = 0 ; i < 100 ; i++)
+        {
+            let row = [];
+            for(let j = 0 ; j < 26 ; j++){
+            
+                let cell = {
+                    bold:obj[k][i][j].bold,
+                    underline:obj[k][i][j].underline,
+                    italic:obj[k][i][j].italic,
+                    fontFamily: obj[k][i][j].fontFamily,
+                    fontSize:obj[k][i][j].fontSize,
+                    fontColor:obj[k][i][j].fontColor,
+                    bgColor:obj[k][i][j].bgColor,
+                    halign:obj[k][i][j].halign,
+                    value:obj[k][i][j].value,
+                    children:obj[k][i][j].children,
+                    formula:obj[k][i][j].formula,
+
+                }
+                row.push(cell);
+            }
+            sheetDB.push(row);
+            let leftCol = document.querySelectorAll(".left-col .left-col-box")[i];
+            leftCol.style.height = 30+"px";
+        }
+
+        workSheetDB.pop();
+        workSheetDB.push(sheetDB);
+        setUI(sheetDB);
+        console.log("completed");
+
+    }
+    
+
+
+
+}
 
 
 
