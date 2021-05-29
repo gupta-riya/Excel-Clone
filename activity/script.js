@@ -224,13 +224,13 @@ for (let i = 0; i < BUIBtn.length; i++) {
             }
 
 
-            if (i == 1) {
+            if (i == 2) {
                 cell.style.textDecoration = "none";
                 cellObj.underline = false;
             }
 
 
-            if (i == 2) {
+            if (i == 1) {
                 cell.style.fontStyle = "normal";
                 cellObj.italic = false;
             }
