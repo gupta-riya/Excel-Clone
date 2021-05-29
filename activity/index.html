@@ -83,7 +83,12 @@
       <!-- --------------- file container - > new , open , download ----- -->
       <div class="file-container">
         <i class="fas fa-file-alt new file-icon"></i>
-        <i class="fas fa-folder-open open file-icon"></i>
+        <div class="open-file-container">
+          <input type="file" id="files"  hidden />
+          <label for = "files">
+          <i class="fas fa-folder-open open file-icon"></i>
+          </label>
+        </div>        
         <i class="fas fa-file-download download file-icon"></i>
       </div>
 
