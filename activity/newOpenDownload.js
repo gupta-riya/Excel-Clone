@@ -6,8 +6,7 @@ newFile.addEventListener("click",function(){
     let confirmReq = confirm("Do you want to create a new workspace ?");
     if(confirmReq == true)
     {
-        location.reload();
-        
+        clearAllExistingDataAndTabs();
     }
 })
 
@@ -33,7 +32,6 @@ openFile.addEventListener("click",uploadJsonFile);
 function uploadJsonFile()
 {
     function onChange(event) {
-        console.log("onchange");
         var reader = new FileReader();
         reader.onload = onReaderLoad;
         reader.readAsText(event.target.files[0]);
@@ -41,14 +39,36 @@ function uploadJsonFile()
 
     function onReaderLoad(event){
 
-        console.log("readeingMode")
-        console.log(event.target.result);
         var obj = JSON.parse(event.target.result);
-        console.log(obj[0][1][1].bold);
+        // sheet num // row num // col num
+        console.log(obj[0][0][0].value);
+
+        // worksheet clear
+        // data wipe out
+        // sheetDb clear
+        // sheets list - remove tabs
+        // place active on sheet list 1
+        clearAllExistingDataAndTabs();
+
+
+        
     }
     
     document.getElementById('files').addEventListener('change', onChange);
 
+}
+
+
+function clearAllExistingDataAndTabs()
+{
+    workSheetDB = [];
+    initCurrentSheetDb();
+    sheetDB = workSheetDB[0];
+    firstSheet.click();
+    for(let i = 1 ; i < sheetsArr.length ; i++)
+    {
+        sheetsArr[i].remove();
+    }
 }
 
 
