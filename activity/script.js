@@ -13,6 +13,7 @@ let alignBtn = document.querySelectorAll(".alignBtn");
 let formulaInput = document.querySelector(".formula-box");
 let gridContainer = document.querySelector(".grid_container");
 let topLeftBlock = document.querySelector(".top-left-block");
+let sheetsArr = document.querySelectorAll(".sheet");
 
 
 // ***************************sheets**************************
@@ -27,7 +28,7 @@ sheetActiveEventHandler(firstSheet);
 
 // clicking on + button will create a new sheet
 addbtnContainer.addEventListener("click", function () {
-    let sheetsArr = document.querySelectorAll(".sheet");
+    
     let lastSheetElem = sheetsArr[sheetsArr.length - 1];
     let idx = lastSheetElem.getAttribute("sheetIdx");
     idx = Number(idx);

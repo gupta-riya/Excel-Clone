@@ -6,7 +6,7 @@ newFile.addEventListener("click",function(){
     let confirmReq = confirm("Do you want to create a new workspace ?");
     if(confirmReq == true)
     {
-        workSheetDB = [];
+        location.reload();
         
     }
 
